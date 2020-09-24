@@ -10,11 +10,43 @@ const initialState = {
         name: "Cristiano Ronaldo", 
         picture:"https://vignette.wikia.nocookie.net/futbol/images/e/e9/Cr7.jpg/revision/latest?cb=20190806210828"
     }],
-    startingP: [],
-    substituteP: []
+    starting: [],
+    substitute: []
 }
 
 const reducerManager = (state = initialState, action) => {
+    if(action.type === "Add_Starting"){
+        return {
+            ...state,
+            starting: state.starting.concat(action.player),
+            players: state.players.filter(p => p.id !== action.player.id)
+        }
+    }
+    if(action.type === "Add_Substitute"){
+        return{
+            ...state,
+            substitute: state.substitute.concat(action.player),
+            players: state.players.filter(p => p.id !== action.player.id)
+        }
+    }
+
+    if(action.type === "remove_Starting"){
+        return{
+            ...state,
+            starting: state.starting.filter(p => p.id !== action.player.id),
+            players: state.players.concat(action.player)
+        }
+    }
+
+    if(action.type === "remove_Substitute"){
+        return{
+            ...state,
+            substitute: state.substitute.filter(p => p.id !== action.player.id),
+            players: state.players.concat(action.player)
+        }
+    }
+    
+
     return state
 }
 
